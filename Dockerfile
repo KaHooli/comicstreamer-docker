@@ -1,12 +1,12 @@
 FROM debian 
 
-MAINTAINER TuRzAm
+MAINTAINER putneyj
 
 ENV PORT 32500
 ENV WEBROOT ""
 
  
-RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev -y
+RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev -y
 
 # Run commands as the comicstreamer user
 RUN adduser \ 

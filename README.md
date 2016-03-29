@@ -5,7 +5,7 @@ Retrieve the last version on github and launch comicstreamer.
 
 ## Usage
 
-`docker run -d -p 32500:32500 -v /my/comics/directory:/comics turzam/comicstreamer`
+`docker run -d -p 32500:32500 -v /my/comics/directory:/comics putneyj/comicstreamer`
 
 ## Variables
 + __WEBROOT__
