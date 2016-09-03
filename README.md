@@ -5,7 +5,7 @@ Retrieve the last version on github and launch comicstreamer.
 
 ## Usage
 
-`docker run -d -p 32500:32500 -e PUID=<User ID> -e PGID=<Group ID> -v /config/directory:/config -v /my/comics/directory:/comics ajw107/comicstreamer`
+`docker run -d -p 32500:32500 -e PUID=<User ID> -e PGID=<Group ID> -v /config/directory:/config -v /my/comics/directory:/comics ajw107/comicstreamer-docker`
 
 ## Variables
 + __WEBROOT__
@@ -24,6 +24,8 @@ Another customs options for launching comicstreamer.
 Configuration files directory
 + __/comics__
 Comics directory
++ __/var/rub/dbus__
+Path to dbus socket for avahi
 
 ## Expose
 + Port : 32500 : comicstreamer default port
