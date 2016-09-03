@@ -47,7 +47,7 @@ RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 WORKDIR "${APP}/${APPNAME}"
 
 # Pybonjour must be installed manually
-pip install https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.tar.gz
+RUN pip install https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.tar.gz
 
 RUN pip install `cat requirements.txt`
 
