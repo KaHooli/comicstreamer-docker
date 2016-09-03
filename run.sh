@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "${APP}/ComicStreamer"
+cd "${APP}/${APPNAME}"
 
 # Update repository
 echo -e "Update comicstreamer..."
