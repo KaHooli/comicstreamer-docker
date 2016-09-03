@@ -4,10 +4,11 @@ MAINTAINER ajw107
 
 ENV PORT 32500
 ENV WEBROOT ""
-ENV PUID 911
-ENV PGID 911
+ENV PUID 999
+ENV PGID 999
 ENV CONFIG "/config"
 ENV APP "/app"
+ENV APPNAME "comicstreamer"
 ENV DATA "/comics"
  
 RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev -y
@@ -38,14 +39,14 @@ RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
 WORKDIR "${APP}"
 
 #grab the latest version from git
-RUN git clone https://github.com/Tristan79/ComicStreamer.git 
+RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 
-WORKDIR "${APP}/ComicStreamer"
+WORKDIR "${APP}/${APPNAME}"
 
 RUN pip install `cat requirements.txt`
 
 #make sure chosen user can run it
-RUN chown -R "${PUID}:${PGID}" "${APP}/Comicstreamer"
+RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
 
 USER abc 
 
