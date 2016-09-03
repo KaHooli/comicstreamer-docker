@@ -13,6 +13,9 @@ ENV DATA "/comics"
  
 RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev -y
 
+#create the specified group
+RUN addgroup abc --guid "${PGID}"
+
 # Run commands as the comicstreamer user
 RUN adduser \ 
 	--disabled-login \ 
