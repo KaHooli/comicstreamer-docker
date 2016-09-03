@@ -24,7 +24,7 @@ Another customs options for launching comicstreamer.
 Configuration files directory
 + __/comics__
 Comics directory
-+ __/var/rub/dbus__
++ __/var/run/dbus__
 Path to dbus socket for avahi
 
 ## Expose
