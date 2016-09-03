@@ -10,20 +10,21 @@ ENV CONFIG "/config"
 ENV APP "/app"
 ENV APPNAME "comicstreamer"
 ENV DATA "/comics"
- 
+
 RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev wget libavahi-compat-libdnssd1 -y
+RUN mkdir -p /var/run/dbus
 
 #create the specified group
-RUN addgroup abc --gid "${PGID}"
+#RUN addgroup abc --gid "${PGID}"
 
 # Run commands as the comicstreamer user
-RUN adduser \ 
-	--disabled-login \ 
-	--shell /bin/bash \ 
-	--gecos "" \
-        --uid "${PUID}" \
-	--gid "${PGID}" \
-        abc
+#RUN adduser \ 
+#	--disabled-login \ 
+#	--shell /bin/bash \ 
+#	--gecos "" \
+#        --uid "${PUID}" \
+#	--gid "${PGID}" \
+#        abc
 
 # Copy & rights to folders
 COPY run.sh /home/abc/run.sh
@@ -31,32 +32,33 @@ COPY run.sh /home/abc/run.sh
 RUN chmod 777 /home/abc/run.sh
 
 # create the comics directory
-RUN mkdir "${DATA}" && chown "${PUID}:${PGID}" "${DATA}"
+#RUN mkdir "${DATA}" && chown "${PUID}:${PGID}" "${DATA}"
 
 # create app and config directories
 
-RUN mkdir -p "${APP}" && chown "${PUID}:${PGID}" "${APP}"
+#RUN mkdir -p "${APP}" && chown "${PUID}:${PGID}" "${APP}"
 
-RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
+#RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
 
-WORKDIR "${APP}"
+#WORKDIR "${APP}"
 
 #grab the latest version from git
-RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
+#RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 
-WORKDIR "${APP}/${APPNAME}"
+#WORKDIR "${APP}/${APPNAME}"
 
 # Pybonjour must be installed manually
 RUN pip install https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.tar.gz
 
-RUN pip install `cat requirements.txt`
+#install the rest of the dependencies
+RUN pip install argh backports.ssl-match-hostname certifi configobj natsort pathtools Pillow PyPDF2 python-dateutil PyYAML six SQLAlchemy tornado unrar watchdog paver pylzma
 
 #make sure chosen user can run it
-RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
+#RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
 
-USER abc 
+#USER abc 
 
-RUN paver libunrar
+#RUN paver libunrar
 
 # Expose default port : 32500
 EXPOSE ${PORT}
@@ -67,5 +69,6 @@ EXPOSE ${PGID}
 VOLUME ${APP}
 VOLUME ${CONFIG}
 VOLUME ${DATA}
+VOLUME /var/run/dbus
 
 ENTRYPOINT ["/home/abc/run.sh"]
