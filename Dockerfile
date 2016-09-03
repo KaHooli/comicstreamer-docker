@@ -11,7 +11,7 @@ ENV APP "/app"
 ENV APPNAME "comicstreamer"
 ENV DATA "/comics"
  
-RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev -y
+RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev wget libavahi-compat-libdnssd1 -y
 
 #create the specified group
 RUN addgroup abc --gid "${PGID}"
@@ -45,6 +45,9 @@ WORKDIR "${APP}"
 RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 
 WORKDIR "${APP}/${APPNAME}"
+
+# Pybonjour must be installed manually
+pip install https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.tar.gz
 
 RUN pip install `cat requirements.txt`
 
