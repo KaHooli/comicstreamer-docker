@@ -1,10 +1,14 @@
 FROM debian 
 
-MAINTAINER putneyj
+MAINTAINER ajw107
 
 ENV PORT 32500
 ENV WEBROOT ""
-
+ENV PUID 911
+ENV PGID 911
+ENV CONFIG "/config"
+ENV APP "/app"
+ENV DATA "/comics"
  
 RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev -y
 
@@ -12,35 +16,49 @@ RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-d
 RUN adduser \ 
 	--disabled-login \ 
 	--shell /bin/bash \ 
-	--gecos "" \ 
-	comicstreamer
+	--gecos "" \
+        --uid "${PUID}" \
+	--gid "${PGID}" \
+        abc
 
 # Copy & rights to folders
-COPY run.sh /home/comicstreamer/run.sh
+COPY run.sh /home/abc/run.sh
 
-RUN chmod 777 /home/comicstreamer/run.sh
+RUN chmod 777 /home/abc/run.sh
 
 # create the comics directory
-RUN mkdir /comics && chown comicstreamer /comics
+RUN mkdir "${DATA}" && chown "${PUID}:${PGID}" "${DATA}"
 
+# create app and config directories
 
-WORKDIR /home/comicstreamer
+RUN mkdir -p "${APP}" && chown "${PUID}:${PGID}" "${APP}"
 
-RUN git clone https://github.com/davide-romanini/ComicStreamer.git 
+RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
 
-WORKDIR /home/comicstreamer/ComicStreamer
+WORKDIR "${APP}"
+
+#grab the latest version from git
+RUN git clone https://github.com/Tristan79/ComicStreamer.git 
+
+WORKDIR "${APP}/ComicStreamer"
 
 RUN pip install `cat requirements.txt`
 
-RUN chown comicstreamer -R .
+#make sure chosen user can run it
+RUN chown -R "${PUID}:${PGID}" "${APP}/Comicstreamer"
 
-USER comicstreamer 
+USER abc 
 
 RUN paver libunrar
 
 # Expose default port : 32500
 EXPOSE ${PORT}
+# Expose User and group id 
+EXPOSE ${PUID}
+EXPOSE ${PGID}
 
-VOLUME "/comics" 
+VOLUME ${APP}
+VOLUME ${CONFIG}
+VOLUME ${DATA}
 
-ENTRYPOINT ["/home/comicstreamer/run.sh"]
+ENTRYPOINT ["/home/abc/run.sh"]
