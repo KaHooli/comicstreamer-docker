@@ -12,7 +12,7 @@ then
     addgroup abc --gid "${PGID}"
 elif [ ! "$(id -g abc)" -eq "${PGID}" ]
 then
-    #the group exists, but we need to change its id
+    #the group exists, but we need to change their id
     groupmod -o -g "${PGID}" abc
 fi
 
@@ -28,7 +28,7 @@ then
         abc
 elif [ ! "$(id -u abc)" -eq "${PUID}" ]
 then
-    #the user does exist,but we need to change it's id
+    #the user does exist,but we need to change their id
     usermod -o -u "$PUID" abc
 fi
 
@@ -44,8 +44,11 @@ if [ ! -d "${APP}" ]
 then
     mkdir -p "${APP}"
 fi
+
+#make sure we have the right permissions
 chown -R "${PUID}:${PGID}" "${APP}"
 
+#now set up the config directory, unless it already exists
 if [ ! -d "${CONFIG}" ]
 then
     mkdir -p "${CONFIG}"
@@ -72,6 +75,7 @@ then
     paver libunrar
 else
     cd "${APP}/${APPNAME}"
+    git stash
     git pull
 fi
 
@@ -82,6 +86,7 @@ echo "CONFIG: [${CONFIG}]"
 echo "DATA: [${DATA}]"
 echo "CS_OPTIONS: [${CS_OPTIONS}]"
 
+#phew, now we get to run it eventually
 ./comicstreamer $CS_OPTIONS
 EOF
 
