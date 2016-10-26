@@ -35,7 +35,7 @@ RUN \
        g++ \
        gcc \
 #	py-pip \
-#	python-dev \
+       python-dev \
        libjpeg-turbo-dev \
        zlib-dev 
 
