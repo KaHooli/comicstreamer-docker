@@ -13,7 +13,9 @@ ENV DATA "/comics"
 
 #make life easy for yourself
 ENV TERM=xterm-color
-RUN echo $'#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M %d/%m/%Y" --block-size="\'1" $@' > /usr/bin/ll
+#this only works on alpine images for some reason
+#RUN echo $'#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M %d/%m/%Y" --block-size="\'1" $@' > /usr/bin/ll
+COPY root/ /
 RUN chmod +x /usr/bin/ll
 
 RUN apt-get update && apt-get install python python-pip python-dev git nano libjpeg-dev zlib1g-dev wget libavahi-compat-libdnssd1 -y
