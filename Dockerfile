@@ -21,7 +21,10 @@ RUN chmod +x /usr/bin/ll
 RUN \
    apk update && \
    apk add --no-cache \
-#	python \
+#        p7zip \
+#        unrar \
+#        unzip \
+#	 python \
 	nano \
 	git \
 	wget \
@@ -29,10 +32,12 @@ RUN \
  
 # install build packages
    apk add --no-cache --virtual=build-dependencies \
+       g++ \
+       gcc \
 #	py-pip \
 #	python-dev \
-	libjpeg-turbo-dev \
-	zlib-dev 
+       libjpeg-turbo-dev \
+       zlib-dev 
 
 #make the message bus dir for avahi bonjour announcing thing
 RUN mkdir -p /var/run/dbus
