@@ -25,7 +25,7 @@ RUN \
 	nano \
 	git \
 	wget \
-	libavahi-compat-libdnssd1 && \
+	avahi-compat-libdns_sd &&\
  
 # install build packages
    apk add --no-cache --virtual=build-dependencies \
