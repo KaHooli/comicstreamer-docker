@@ -11,7 +11,12 @@ ENV APP "/app"
 ENV APPNAME "comicstreamer"
 ENV DATA "/comics"
 
-RUN apt-get update && apt-get install python python-pip python-dev git libjpeg-dev zlib1g-dev wget libavahi-compat-libdnssd1 -y
+#make life easy for yourself
+ENV TERM=xterm-color
+RUN echo $'#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M %d/%m/%Y" --block-size="\'1" $@' > /usr/bin/ll
+RUN chmod +x /usr/bin/ll
+
+RUN apt-get update && apt-get install python python-pip python-dev git nano libjpeg-dev zlib1g-dev wget libavahi-compat-libdnssd1 -y
 RUN mkdir -p /var/run/dbus
 
 #create the specified group
@@ -59,6 +64,13 @@ RUN pip install argh backports.ssl-match-hostname certifi configobj natsort path
 #USER abc 
 
 #RUN paver libunrar
+
+# cleanup
+ apt-get clean && \
+ rm -rf \
+	/tmp/* \
+	/var/lib/apt/lists/* \
+  /var/tmp/*
 
 # Expose default port : 32500
 EXPOSE ${PORT}
