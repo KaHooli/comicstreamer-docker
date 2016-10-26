@@ -1,4 +1,4 @@
-FROM lsiobase/alpine
+FROM lsiobase/alpine.python 
 MAINTAINER  ajw107 (Alex Wood)
 
 ENV PORT 32500
@@ -21,7 +21,7 @@ RUN chmod +x /usr/bin/ll
 RUN \
    apk update && \
    apk add --no-cache \
-	python \
+#	python \
 	nano \
 	git 
 	wget \
@@ -29,8 +29,8 @@ RUN \
  
 # install build packages
    apk add --no-cache --virtual=build-dependencies \
-	py-pip \
-	python-dev \
+#	py-pip \
+#	python-dev \
 	libjpeg-turbo-dev \
 	zlib-dev 
 
