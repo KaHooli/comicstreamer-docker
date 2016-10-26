@@ -23,7 +23,7 @@ RUN \
    apk add --no-cache \
 #	python \
 	nano \
-	git 
+	git \
 	wget \
 	libavahi-compat-libdnssd1 && \
  
