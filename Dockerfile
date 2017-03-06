@@ -15,7 +15,7 @@ RUN chmod +x /usr/bin/ll
 
 RUN apk update
 RUN apk add --no-cache \
-  avahi-compat-libdns_sd
+  avahi-compat-libdns_sd \
   linux-headers
 
 # install build packages
