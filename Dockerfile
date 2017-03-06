@@ -1,4 +1,4 @@
-FROM lsiobase/alpine.python 
+FROM lsiobase/alpine.python
 MAINTAINER  ajw107 (Alex Wood)
 
 ENV PORT 32500
@@ -18,26 +18,20 @@ ENV TERM=xterm-color
 COPY root/ /
 RUN chmod +x /usr/bin/ll
 
-RUN \
-   apk update && \
-   apk add --no-cache \
-#        p7zip \
-#        unrar \
-#        unzip \
-#	 python \
-	nano \
-	git \
-	wget \
-	avahi-compat-libdns_sd &&\
- 
+RUN apk update
+RUN apk add --no-cache \
+  nano \
+  git \
+  wget \
+  avahi-compat-libdns_sd
+
 # install build packages
-   apk add --no-cache --virtual=build-dependencies \
-       g++ \
-       gcc \
-#	py-pip \
-       python-dev \
-       libjpeg-turbo-dev \
-       zlib-dev 
+RUN apk add --no-cache --virtual=build-dependencies \
+  g++ \
+  gcc \
+  python-dev \
+  libjpeg-turbo-dev \
+  zlib-dev
 
 #make the message bus dir for avahi bonjour announcing thing
 RUN mkdir -p /var/run/dbus
@@ -48,31 +42,31 @@ RUN pip install --no-cache-dir -U \
 
 #install the rest of the dependencies
 RUN pip install --no-cache-dir -U \
-                 argh \
-		 backports.ssl-match-hostname \
-		 certifi \
-		 configobj \
-		 natsort \
-		 pathtools \
-		 Pillow \
-		 PyPDF2 \
-		 python-dateutil \
-		 PyYAML \
-		 six \
-		 SQLAlchemy \
-		 tornado \
-		 unrar \
-		 watchdog \
-		 paver \
-		 pylzma
+  argh \
+  backports.ssl-match-hostname \
+  certifi \
+  configobj \
+  natsort \
+  pathtools \
+  Pillow \
+  PyPDF2 \
+  python-dateutil \
+  PyYAML \
+  six \
+  SQLAlchemy \
+  tornado \
+  unrar \
+  watchdog \
+  paver \
+  pylzma
 
 #create the specified group
 #RUN addgroup abc --gid "${PGID}"
 
 # Run commands as the comicstreamer user
-#RUN adduser \ 
-#	--disabled-login \ 
-#	--shell /bin/bash \ 
+#RUN adduser \
+#	--disabled-login \
+#	--shell /bin/bash \
 #	--gecos "" \
 #        --uid "${PUID}" \
 #	--gid "${PGID}" \
@@ -88,21 +82,21 @@ RUN chmod 777 /home/abc/run.sh
 
 # create app and config directories
 
-#RUN mkdir -p "${APP}" && chown "${PUID}:${PGID}" "${APP}"
+RUN mkdir -p "${APP}" && chown "${PUID}:${PGID}" "${APP}"
 
-#RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
+RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
 
-#WORKDIR "${APP}"
+WORKDIR "${APP}"
 
-#grab the latest version from git
-#RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
+grab the latest version from git
+RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 
-#WORKDIR "${APP}/${APPNAME}"
+WORKDIR "${APP}/${APPNAME}"
 
 #make sure chosen user can run it
-#RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
+RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
 
-#USER abc 
+#USER abc
 
 #RUN paver libunrar
 
@@ -117,7 +111,7 @@ RUN apk del --purge \
 
 # Expose default port : 32500
 EXPOSE ${PORT}
-# Expose User and group id 
+# Expose User and group id
 EXPOSE ${PUID}
 EXPOSE ${PGID}
 
