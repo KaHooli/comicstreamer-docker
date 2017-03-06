@@ -16,6 +16,7 @@ RUN chmod +x /usr/bin/ll
 RUN apk update
 RUN apk add --no-cache \
   avahi-compat-libdns_sd
+  linux-headers
 
 # install build packages
 RUN apk add --no-cache --virtual=build-dependencies \
@@ -90,12 +91,12 @@ RUN paver libunrar
 
 # cleanup
 RUN apk del --purge \
-	build-dependencies && \
-    rm -rf \
-        /root/.cache \
-	/tmp/* \
-	/var/lib/apt/lists/* \
-        /var/tmp/*
+    build-dependencies && \
+  rm -rf \
+    /root/.cache \
+    /tmp/* \
+    /var/lib/apt/lists/* \
+    /var/tmp/*
 
 # Expose default port : 32500
 EXPOSE ${PORT}
