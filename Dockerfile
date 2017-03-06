@@ -88,7 +88,7 @@ RUN mkdir -p "${CONFIG}" && chown "${PUID}:${PGID}" "${CONFIG}"
 
 WORKDIR "${APP}"
 
-grab the latest version from git
+#grab the latest version from git
 RUN git clone https://github.com/Tristan79/ComicStreamer.git "${APPNAME}"
 
 WORKDIR "${APP}/${APPNAME}"
