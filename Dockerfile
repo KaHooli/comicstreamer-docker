@@ -10,28 +10,16 @@ ENV APP "/app"
 ENV APPNAME "comicstreamer"
 ENV DATA "/comics"
 
-#make life easy for yourself
-ENV TERM=xterm-color
-#this only works on alpine images for some reason
-#and I've just changed to an alpine image, ah well.....
-#RUN echo $'#!/bin/bash\nls -alF --color=auto --group-directories-first --time-style=+"%H:%M %d/%m/%Y" --block-size="\'1" $@' > /usr/bin/ll
 COPY root/ /
 RUN chmod +x /usr/bin/ll
 
 RUN apk update
 RUN apk add --no-cache \
-  nano \
-  git \
-  wget \
   avahi-compat-libdns_sd
 
 # install build packages
 RUN apk add --no-cache --virtual=build-dependencies \
-  g++ \
-  gcc \
-  python-dev \
-  libjpeg-turbo-dev \
-  zlib-dev
+  libjpeg-turbo-dev
 
 #make the message bus dir for avahi bonjour announcing thing
 RUN mkdir -p /var/run/dbus
@@ -61,16 +49,16 @@ RUN pip install --no-cache-dir -U \
   pylzma
 
 #create the specified group
-#RUN addgroup abc --gid "${PGID}"
+RUN addgroup abc --gid "${PGID}"
 
 # Run commands as the comicstreamer user
-#RUN adduser \
-#	--disabled-login \
-#	--shell /bin/bash \
-#	--gecos "" \
-#        --uid "${PUID}" \
-#	--gid "${PGID}" \
-#        abc
+RUN adduser \
+	--disabled-login \
+	--shell /bin/bash \
+	--gecos "" \
+  --uid "${PUID}" \
+	--gid "${PGID}" \
+  abc
 
 # Copy & rights to folders
 COPY run.sh /home/abc/run.sh
@@ -96,9 +84,9 @@ WORKDIR "${APP}/${APPNAME}"
 #make sure chosen user can run it
 RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
 
-#USER abc
+USER abc
 
-#RUN paver libunrar
+RUN paver libunrar
 
 # cleanup
 RUN apk del --purge \
