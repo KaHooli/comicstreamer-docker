@@ -77,7 +77,7 @@ RUN chown -R "${PUID}:${PGID}" "${APP}/${APPNAME}"
 
 USER abc
 
-RUN paver libunrar
+#RUN paver libunrar
 
 # cleanup
 RUN apk del --purge \
