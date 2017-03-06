@@ -14,9 +14,11 @@ COPY root/ /
 RUN chmod +x /usr/bin/ll
 
 RUN apk update
-RUN apk add --no-cache \
+RUN apk add --update --no-cache \
   avahi-compat-libdns_sd \
-  linux-headers
+  gcc \
+  python2-dev \
+  musl-dev
 
 # install build packages
 RUN apk add --no-cache --virtual=build-dependencies \
