@@ -5,7 +5,7 @@ Retrieve the last version on github and launch comicstreamer.
 
 ## Usage
 
-`docker run -d -p 32500:32500 -e PUID=<User ID> -e PGID=<Group ID> -v /config/directory:/config -v /my/comics/directory:/comics ajw107/comicstreamer-docker`
+`docker run -d -p 32500:32500 -e PUID=<User ID> -e PGID=<Group ID> -v /config/directory:/config -v /my/comics/directory:/comics kahooli/comicstreamer`
 
 ## Variables
 + __WEBROOT__

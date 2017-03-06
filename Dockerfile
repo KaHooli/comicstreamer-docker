@@ -51,18 +51,6 @@ RUN pip install --no-cache-dir -U \
   paver \
   pylzma
 
-#create the specified group
-RUN addgroup abc --gid "${PGID}"
-
-# Run commands as the comicstreamer user
-RUN adduser \
-	--disabled-login \
-	--shell /bin/bash \
-	--gecos "" \
-  --uid "${PUID}" \
-	--gid "${PGID}" \
-  abc
-
 # Copy & rights to folders
 COPY run.sh /home/abc/run.sh
 
