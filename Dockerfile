@@ -80,13 +80,13 @@ USER abc
 #RUN paver libunrar
 
 # cleanup
-#RUN apk del --purge \
-#  build-dependencies
-RUN rm -rf \
-  /root/.cache \
-  /tmp/* \
-  /var/lib/apt/lists/* \
-  /var/tmp/*
+RUN apk del --purge \
+  build-dependencies
+#RUN rm -rf \
+#  /root/.cache \
+#  /tmp/* \
+#  /var/lib/apt/lists/* \
+#  /var/tmp/*
 
 # Expose default port : 32500
 EXPOSE ${PORT}
