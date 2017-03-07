@@ -80,8 +80,8 @@ USER abc
 #RUN paver libunrar
 
 # cleanup
-RUN apk del --purge \
-  build-dependencies
+#RUN apk del --purge \
+#  build-dependencies
 #RUN rm -rf \
 #  /root/.cache \
 #  /tmp/* \
